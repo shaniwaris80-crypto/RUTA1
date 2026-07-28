@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071426">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <title>Ruta Madrid Pro</title>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">GESTIÓN MAYORISTA</div>
+      <h1>Ruta Madrid <span>Pro</span></h1>
+      <p id="routeDate"></p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeBtn" title="Cambiar tema">◐</button>
+      <button class="icon-btn" id="backupBtn" title="Copia de seguridad">⇩</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="view active" id="dashboard">
+      <div class="hero">
+        <div>
+          <div class="hero-label">BENEFICIO ESTIMADO</div>
+          <div class="hero-value" id="heroProfit">0,00 €</div>
+          <div class="hero-meta" id="heroMargin">Margen 0,0%</div>
+        </div>
+        <button class="primary" data-go="orders">+ Nuevo pedido</button>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="section-head"><div><h2>Estado de la ruta</h2><p>Control rápido de hoy</p></div></div>
+      <div class="progress-card" id="routeProgress"></div>
+      <div class="grid-two">
+        <article class="panel">
+          <div class="section-head"><div><h3>Alertas</h3><p>Requieren atención</p></div></div>
+          <div id="alerts"></div>
+        </article>
+        <article class="panel">
+          <div class="section-head"><div><h3>Acciones rápidas</h3><p>Documentos y comunicación</p></div></div>
+          <div class="quick-grid">
+            <button data-action="copy-provider">📦<span>Copiar compra</span></button>
+            <button data-action="share-route">💬<span>WhatsApp ruta</span></button>
+            <button data-action="print">🧾<span>Informe / PDF</span></button>
+            <button data-go="reports">📊<span>Ver márgenes</span></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="orders">
+      <div class="page-head">
+        <div><h2>Pedidos</h2><p>Pedido y precio individual por cliente</p></div>
+        <button class="primary" id="addClientBtn">+ Cliente</button>
+      </div>
+      <div class="filters">
+        <input id="clientSearch" placeholder="Buscar cliente…">
+        <select id="clientSelect"></select>
+      </div>
+      <div id="orderEditor"></div>
+    </section>
+
+    <section class="view" id="purchase">
+      <div class="page-head">
+        <div><h2>Compra consolidada</h2><p>Todo lo necesario para Madrid</p></div>
+        <button class="secondary" data-action="copy-provider">Copiar TXT</button>
+      </div>
+      <div class="segmented">
+        <button class="active" data-purchase-filter="all">Todo</button>
+        <button data-purchase-filter="pending">Pendiente</button>
+        <button data-purchase-filter="external">Externo</button>
+      </div>
+      <div id="purchaseList"></div>
+    </section>
+
+    <section class="view" id="route">
+      <div class="page-head">
+        <div><h2>Reparto</h2><p>Orden, entrega y cobro</p></div>
+        <button class="secondary" data-action="share-route">Compartir</button>
+      </div>
+      <div id="routeList"></div>
+    </section>
+
+    <section class="view" id="reports">
+      <div class="page-head">
+        <div><h2>Resultados</h2><p>Ventas, costes, transporte y beneficio</p></div>
+        <button class="secondary" data-action="print">PDF</button>
+      </div>
+      <div id="reportSummary"></div>
+      <div class="panel table-panel">
+        <div class="section-head"><div><h3>Rentabilidad por cliente</h3><p>De mayor a menor beneficio</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Venta</th><th>Coste</th><th>Beneficio</th><th>Margen</th></tr></thead><tbody id="clientProfitTable"></tbody></table></div>
+      </div>
+      <div class="panel table-panel">
+        <div class="section-head"><div><h3>Rentabilidad por producto</h3><p>Consolidado de toda la ruta</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Cantidad</th><th>Venta</th><th>Coste</th><th>Beneficio</th></tr></thead><tbody id="productProfitTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section class="view" id="more">
+      <div class="page-head"><div><h2>Ajustes</h2><p>Datos, transporte y seguridad</p></div></div>
+      <div class="panel form-grid">
+        <label>Fecha de ruta<input type="date" id="dateInput"></label>
+        <label>Gasto de transporte (€)<input inputmode="decimal" id="transportInput"></label>
+        <label>Nombre del negocio<input id="businessInput"></label>
+        <label>Teléfono / WhatsApp<input id="phoneInput"></label>
+      </div>
+      <div class="panel">
+        <div class="section-head"><div><h3>Datos</h3><p>La información se guarda en este dispositivo</p></div></div>
+        <div class="button-row">
+          <button class="secondary" id="exportBtn">Exportar backup</button>
+          <button class="secondary" id="importBtn">Restaurar backup</button>
+          <button class="secondary" id="importOldBtn">Importar versión antigua</button>
+          <button class="danger" id="resetBtn">Borrar todo</button>
+        </div>
+      </div>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="active" data-go="dashboard"><b>⌂</b><span>Inicio</span></button>
+    <button data-go="orders"><b>🧾</b><span>Pedidos</span></button>
+    <button data-go="purchase"><b>📦</b><span>Compra</span></button>
+    <button data-go="route"><b>🚚</b><span>Ruta</span></button>
+    <button data-go="reports"><b>▥</b><span>Resultados</span></button>
+    <button data-go="more"><b>•••</b><span>Más</span></button>
+  </nav>
+</div>
+
+<dialog id="clientDialog">
+  <form method="dialog" id="clientForm">
+    <div class="dialog-head"><h3>Cliente</h3><button value="cancel">×</button></div>
+    <input type="hidden" id="editClientId">
+    <label>Nombre<input id="clientName" required></label>
+    <label>Teléfono<input id="clientPhone" inputmode="tel"></label>
+    <label>Dirección<input id="clientAddress"></label>
+    <label>Notas<textarea id="clientNotes"></textarea></label>
+    <div class="button-row"><button value="cancel" class="secondary">Cancelar</button><button value="default" id="saveClientBtn" class="primary">Guardar</button></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
