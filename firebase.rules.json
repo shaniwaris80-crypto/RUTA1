@@ -1,0 +1,28 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "userCompanies": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && (auth.uid === $uid || root.child('companies').child('aw').child('users').child(auth.uid).child('role').val() === 'admin')"
+      }
+    },
+    "companies": {
+      "$companyId": {
+        ".read": "auth != null && root.child('userCompanies').child(auth.uid).child($companyId).val() === true",
+        ".write": "auth != null && root.child('userCompanies').child(auth.uid).child($companyId).val() === true && root.child('companies').child($companyId).child('users').child(auth.uid).child('active').val() === true",
+        "users": {
+          ".write": "auth != null && root.child('companies').child($companyId).child('users').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "settings": {
+          ".write": "auth != null && root.child('companies').child($companyId).child('users').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "state": {
+          ".read": "auth != null && root.child('userCompanies').child(auth.uid).child($companyId).val() === true",
+          ".write": "auth != null && root.child('userCompanies').child(auth.uid).child($companyId).val() === true && root.child('companies').child($companyId).child('users').child(auth.uid).child('active').val() === true"
+        }
+      }
+    }
+  }
+}

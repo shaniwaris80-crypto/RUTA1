@@ -1,0 +1,17 @@
+{
+  "name": "Ruta Madrid Pro",
+  "short_name": "Madrid Pro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Facturación profesional con códigos cortos, compras, pedidos, stock, rutas e informes internos privados.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Ruta Madrid Pro" />
+  <title>Ruta Madrid Pro</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="appShell" class="shell">
+    <aside id="sidebar" class="sidebar" aria-label="Menú principal">
+      <div class="brandBlock">
+        <div class="brandLogo" aria-label="AW">AW</div>
+        <div class="brandText">
+          <strong>RUTA MADRID</strong>
+          <span>Pro · Pedidos y facturación</span>
+        </div>
+      </div>
+      <nav id="nav" class="nav"></nav>
+      <div class="sideFoot">
+        <button id="themeToggle" class="ghostBtn full">Modo negro</button>
+        <small>Cliente limpio · Interno privado</small>
+      </div>
+    </aside>
+
+    <div id="sidebarScrim" class="scrim" hidden></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="iconBtn" aria-label="Abrir menú">☰</button>
+        <div class="topTitle">
+          <strong id="pageTitle">Inicio</strong>
+          <span id="pageSubtitle">Panel general</span>
+        </div>
+        <div class="topActions">
+          <span id="saveStatus" class="saveStatus">Local</span>
+          <button id="syncBtn" class="primaryBtn small">Cloud</button>
+        </div>
+      </header>
+
+      <section id="view" class="view" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toastRoot"></div>
+
+  <!-- PDF / Excel libraries. The app works locally without them, but PDF/Excel buttons need internet unless vendored. -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.3/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Optional Firebase compat mode. Fill firebase-config.js and activate Cloud in Ajustes. -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
