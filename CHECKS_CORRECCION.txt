@@ -1,0 +1,8 @@
+{
+  "javascript_syntax": "OK",
+  "removed_duplicate_async": "OK",
+  "service_worker_cache": "ruta-madrid-v19-fix1",
+  "firebase_config_present": true,
+  "seed_data_present": true,
+  "styles_present": true
+}
