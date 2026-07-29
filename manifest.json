@@ -1,0 +1,10 @@
+{
+  "name": "Ruta Madrid Pro",
+  "short_name": "Madrid Pro",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#0f766e",
+  "description": "Pedidos, compra, precios para Factumad y reparto de la Ruta Madrid.",
+  "icons": []
+}
