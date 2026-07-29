@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>Ruta Madrid PDA</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#16a34a;--accent2:#0f766e;--danger:#dc2626;--warn:#d97706;--shadow:0 8px 28px rgba(15,23,42,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}.app{max-width:980px;margin:auto;padding:0 12px 92px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(243,245,249,.94);backdrop-filter:blur(12px);padding:12px 0 8px}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand h1{font-size:20px;margin:0}.date{font-size:12px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow);margin-bottom:12px}
+.hero{background:linear-gradient(135deg,#111827,#0f766e);color:white;border:0}.hero h2{margin:0 0 6px;font-size:24px}.hero p{margin:0;color:#d1fae5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.stat{background:rgba(255,255,255,.12);padding:10px;border-radius:14px}.stat b{display:block;font-size:22px}.stat span{font-size:11px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.btn{border:0;border-radius:13px;padding:12px 14px;font-weight:750;cursor:pointer}.btn.primary{background:var(--accent);color:white}.btn.dark{background:#111827;color:white}.btn.soft{background:#eef2f7;color:#111827}.btn.warn{background:#fff7ed;color:#9a3412}.btn.danger{background:#fee2e2;color:#991b1b}.btn.small{padding:8px 10px;font-size:13px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.section-title h2{font-size:18px;margin:0}.muted{color:var(--muted);font-size:13px}
+.search{width:100%;border:1px solid var(--line);background:white;border-radius:13px;padding:12px}
+.client-grid{display:grid;gap:9px}.client{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:15px;background:white}.client .num{width:34px;height:34px;border-radius:11px;background:#ecfdf5;color:#166534;display:grid;place-items:center;font-weight:800}.client-main{flex:1;min-width:0}.client-main b{display:block}.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;background:#f3f4f6;color:#4b5563}.badge.done{background:#dcfce7;color:#166534}.badge.skip{background:#fef3c7;color:#92400e}
+.view{display:none}.view.active{display:block}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:7px max(7px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom));z-index:30}
+.nav{border:0;background:none;padding:7px 2px;color:#6b7280;font-size:11px;font-weight:700}.nav span{display:block;font-size:19px}.nav.active{color:#15803d}
+.product-toolbar{display:grid;grid-template-columns:1fr auto;gap:8px}.cats{display:flex;gap:7px;overflow:auto;padding:8px 0}.chip{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:700}.chip.active{background:#111827;color:white}
+.product-list{display:grid;gap:8px}.product{border:1px solid var(--line);border-radius:15px;padding:10px;background:white}.product-top{display:flex;align-items:center;gap:8px}.product-name{flex:1;font-weight:750}.qty{display:flex;align-items:center;gap:6px}.qty button{width:38px;height:38px;border:0;border-radius:12px;background:#eef2f7;font-size:22px}.qty input{width:58px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 4px;font-weight:800}.unit{font-size:11px;color:var(--muted);margin-top:4px}
+.order-line,.buy-line{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.order-line:last-child,.buy-line:last-child{border:0}
+.big-name{font-weight:800}.right{text-align:right}.empty{text-align:center;color:var(--muted);padding:28px 10px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin:0 0 4px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:flex-end;z-index:50}.modal.open{display:flex}.sheet{background:white;width:100%;max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}.sheet-head h2{margin:0}.close{border:0;background:#eef2f7;width:38px;height:38px;border-radius:12px}
+textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:12px;padding:10px}
+@media(min-width:700px){
+.client-grid{grid-template-columns:1fr 1fr}
+.product-list{grid-template-columns:1fr 1fr}
+.modal{align-items:center;justify-content:center}
+.sheet{max-width:760px;border-radius:22px;max-height:88vh}
+.stats{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:1000px){
+.app{max-width:1180px}
+.client-grid{grid-template-columns:repeat(3,1fr)}
+.product-list{grid-template-columns:repeat(3,1fr)}
+}
+.touch-row{cursor:pointer;transition:transform .08s ease,box-shadow .08s ease}
+.touch-row:active{transform:scale(.99)}
+.product-detail-head{background:linear-gradient(135deg,#111827,#0f766e);color:white;border-radius:18px;padding:14px;margin:12px 0}
+.product-detail-head h3{font-size:22px;margin:0 0 6px}
+.product-client-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.product-client-row:last-child{border-bottom:0}
+.client-qty-edit{display:flex;align-items:center;gap:6px}
+.client-qty-edit button{width:38px;height:38px;border:0;border-radius:12px;background:#eef2f7;font-size:21px}
+.client-qty-edit input{width:64px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 4px;font-weight:800}
+.detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+@media(max-width:699px){
+.sheet{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.product-client-row{grid-template-columns:1fr}
+.client-qty-edit{justify-content:flex-end}
+.btn{min-height:46px}
+.qty button{width:44px;height:44px}
+.qty input{height:44px}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand"><div><h1>🚚 RUTA MADRID</h1><div class="date" id="today"></div></div><button class="btn soft small" id="newRoute">Nueva ruta</button></div></header>
+<main>
+<section id="home" class="view active"></section>
+<section id="clients" class="view"></section>
+<section id="order" class="view"></section>
+<section id="buy" class="view"></section>
+<section id="delivery" class="view"></section>
+</main>
+</div>
+<nav class="bottom">
+<button class="nav active" data-view="home"><span>⌂</span>Inicio</button>
+<button class="nav" data-view="clients"><span>👥</span>Clientes</button>
+<button class="nav" data-view="order"><span>📝</span>Pedido</button>
+<button class="nav" data-view="buy"><span>🛒</span>Compra</button>
+<button class="nav" data-view="delivery"><span>🚚</span>Reparto</button>
+</nav>
+<div class="modal" id="modal"><div class="sheet"><div class="sheet-head"><h2 id="modalTitle"></h2><button class="close" id="closeModal">✕</button></div><div id="modalBody"></div></div></div>
+<script>
+const INITIAL={"clients": [{"id": "c1", "name": "ADNAN", "phone": "", "address": "", "routeOrder": 1, "active": true}, {"id": "c2", "name": "ASLAM", "phone": "", "address": "", "routeOrder": 2, "active": true}, {"id": "c3", "name": "ABBAS", "phone": "", "address": "", "routeOrder": 3, "active": true}, {"id": "c4", "name": "TARIQ", "phone": "", "address": "", "routeOrder": 4, "active": true}, {"id": "c5", "name": "VICTORIA", "phone": "", "address": "", "routeOrder": 5, "active": true}, {"id": "c6", "name": "NADEEM", "phone": "", "address": "", "routeOrder": 6, "active": true}, {"id": "c7", "name": "PATXI", "phone": "", "address": "", "routeOrder": 7, "active": true}, {"id": "c8", "name": "SAN PABLO", "phone": "", "address": "", "routeOrder": 8, "active": true}, {"id": "c9", "name": "SANTIAGO", "phone": "", "address": "", "routeOrder": 9, "active": true}, {"id": "c10", "name": "ANSAR", "phone": "", "address": "", "routeOrder": 10, "active": true}, {"id": "c11", "name": "MARIA BIBIANA", "phone": "", "address": "", "routeOrder": 11, "active": true}, {"id": "c12", "name": "ROMINA", "phone": "", "address": "", "routeOrder": 12, "active": true}, {"id": "c13", "name": "MAY", "phone": "", "address": "", "routeOrder": 13, "active": true}, {"id": "c14", "name": "DEIBY", "phone": "", "address": "", "routeOrder": 14, "active": true}, {"id": "c15", "name": "BACALAO", "phone": "", "address": "", "routeOrder": 15, "active": true}], "products": [{"id": "p1", "name": "MACHO MADURO", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p2", "name": "MACHO VERDE", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p3", "name": "BANANA", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p4", "name": "BANANA AMARILLA", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p5", "name": "GUINEO ECUATORIAL", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p6", "name": "PLATANO CANARIO", "unit": "CAJA", "category": "Plátanos", "active": true}, {"id": "p7", "name": "AGUACATE PREMIUM", "unit": "CAJA", "category": "Aguacates", "active": true}, {"id": "p8", "name": "AGUACATE GRANEL", "unit": "CAJA", "category": "Aguacates", "active": true}, {"id": "p9", "name": "AVOCADO", "unit": "CAJA", "category": "Aguacates", "active": true}, {"id": "p10", "name": "MANGO", "unit": "CAJA", "category": "Mangos", "active": true}, {"id": "p11", "name": "MANGO MINGOLO", "unit": "CAJA", "category": "Mangos", "active": true}, {"id": "p12", "name": "MANGO AZUCAR", "unit": "CAJA", "category": "Mangos", "active": true}, {"id": "p13", "name": "MANGO BICHE", "unit": "CAJA", "category": "Mangos", "active": true}, {"id": "p14", "name": "MANGO VERDE", "unit": "CAJA", "category": "Mangos", "active": true}, {"id": "p15", "name": "PAPAYA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p16", "name": "PAPAYA VERDE", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p17", "name": "PITHAYA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p18", "name": "MARACUYA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p19", "name": "GRANADILLA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p20", "name": "GUANABANA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p21", "name": "GUAYABA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p22", "name": "CURUBA", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p23", "name": "CIRUELA VERDE", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p24", "name": "JOCOTE", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p25", "name": "ZAPOTE", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p26", "name": "COCO", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p27", "name": "AGUA COCO", "unit": "CAJA", "category": "Tropicales", "active": true}, {"id": "p28", "name": "LIMA", "unit": "CAJA", "category": "Cítricos", "active": true}, {"id": "p29", "name": "LIMON", "unit": "CAJA", "category": "Cítricos", "active": true}, {"id": "p30", "name": "NARANJA", "unit": "CAJA", "category": "Cítricos", "active": true}, {"id": "p31", "name": "YUCA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p32", "name": "YAME", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p33", "name": "YAUTIA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p34", "name": "MALANGA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p35", "name": "MALANAGA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p36", "name": "BONIATO", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p37", "name": "PATATA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p38", "name": "PATATA LAVADA", "unit": "CAJA", "category": "Tubérculos", "active": true}, {"id": "p39", "name": "AUYAMA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p40", "name": "CALABAZA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p41", "name": "KADDU", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p42", "name": "KARELA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p43", "name": "CHAYOTE", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p44", "name": "OKRA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p45", "name": "TOMATE", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p46", "name": "TOMATE RAMA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p47", "name": "TOMATE DANIELA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p48", "name": "TOMATE CHERRY", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p49", "name": "PEPINO", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p50", "name": "CEBOLLA NORMAL", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p51", "name": "CEBOLLA ROJA", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p52", "name": "AJO", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p53", "name": "JENGIBRE", "unit": "CAJA", "category": "Verduras", "active": true}, {"id": "p54", "name": "HABANERO", "unit": "CAJA", "category": "Picantes", "active": true}, {"id": "p55", "name": "GUINDILLA", "unit": "CAJA", "category": "Picantes", "active": true}, {"id": "p56", "name": "GUINDILLA VERDE FINA", "unit": "CAJA", "category": "Picantes", "active": true}, {"id": "p57", "name": "CHILE FINO VERDE", "unit": "CAJA", "category": "Picantes", "active": true}, {"id": "p58", "name": "JALAPEÑO", "unit": "CAJA", "category": "Picantes", "active": true}, {"id": "p59", "name": "CILANTRO", "unit": "MANOJO", "category": "Hierbas", "active": true}, {"id": "p60", "name": "ENELDO", "unit": "MANOJO", "category": "Hierbas", "active": true}, {"id": "p61", "name": "HIERBABUENA", "unit": "MANOJO", "category": "Hierbas", "active": true}, {"id": "p62", "name": "PEREJIL", "unit": "MANOJO", "category": "Hierbas", "active": true}, {"id": "p63", "name": "ALOE VERA", "unit": "CAJA", "category": "Otros", "active": true}, {"id": "p64", "name": "MAIZ MAZORCA", "unit": "CAJA", "category": "Otros", "active": true}, {"id": "p65", "name": "MAIZ MOROCHO", "unit": "UD", "category": "Otros", "active": true}, {"id": "p66", "name": "AREPAS AMARILLAS", "unit": "CAJA", "category": "Envasados", "active": true}, {"id": "p67", "name": "PANELA FRACCIONADA", "unit": "CAJA", "category": "Envasados", "active": true}, {"id": "p68", "name": "PASTA ACHIOTE", "unit": "CAJA", "category": "Envasados", "active": true}, {"id": "p69", "name": "GALLETAS SALTIN NOE", "unit": "CAJA", "category": "Envasados", "active": true}, {"id": "p70", "name": "DUCALES", "unit": "CAJA", "category": "Envasados", "active": true}, {"id": "p71", "name": "MELON AMARILLO MARROC", "unit": "UD", "category": "Otros", "active": true}, {"id": "p72", "name": "SANDIA MARROC", "unit": "UD", "category": "Otros", "active": true}]};
+const KEY='ruta_madrid_pda_v1';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=(p='id')=>p+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>new Date().toISOString().slice(0,10);
+let state=load();
+let currentClient=state.clients[0]?.id||null, productQuery='', category='Todos';
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x?.clients&&x?.products)return x}catch(e){}return {date:today(),clients:structuredClone(INITIAL.clients),products:structuredClone(INITIAL.products),orders:{},status:{},purchased:{}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function qty(v){return Number(v||0).toLocaleString('es-ES',{maximumFractionDigits:2})}
+function order(id){return state.orders[id]||(state.orders[id]={})}
+function lines(id){return Object.entries(order(id)).filter(([,v])=>Number(v)>0).map(([pid,q])=>({p:state.products.find(x=>x.id===pid),q:Number(q)})).filter(x=>x.p)}
+function totals(){const m={};state.clients.forEach(c=>lines(c.id).forEach(({p,q})=>{const k=p.name+'__'+p.unit;m[k]||(m[k]={p,q:0,clients:[]});m[k].q+=q;m[k].clients.push({name:c.name,q})}));return Object.values(m).sort((a,b)=>a.p.name.localeCompare(b.p.name,'es'))}
+function setView(v){$$('.view').forEach(x=>x.classList.toggle('active',x.id===v));$$('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===v));render()}
+function statusText(c){const s=state.status[c.id];if(s==='done')return 'Pedido hecho';if(s==='skip')return 'No compra';return 'Pendiente'}
+function render(){
+ $('#today').textContent=new Date(state.date+'T12:00').toLocaleDateString('es-ES',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+ renderHome();renderClients();renderOrder();renderBuy();renderDelivery();
+}
+function renderHome(){
+ const done=state.clients.filter(c=>state.status[c.id]==='done').length, skip=state.clients.filter(c=>state.status[c.id]==='skip').length;
+ const pending=state.clients.length-done-skip, t=totals(), totalQty=t.reduce((a,x)=>a+x.q,0);
+ $('#home').innerHTML=`<article class="card hero"><h2>Ruta del día</h2><p>Recoge pedidos, suma la compra y prepara el reparto.</p><div class="stats"><div class="stat"><b>${state.clients.length}</b><span>Clientes</span></div><div class="stat"><b>${done}</b><span>Hechos</span></div><div class="stat"><b>${pending}</b><span>Pendientes</span></div><div class="stat"><b>${qty(totalQty)}</b><span>Unidades totales</span></div></div><div class="actions"><button class="btn primary" onclick="setView('order')">Continuar pedidos</button><button class="btn soft" onclick="setView('buy')">Ver compra total</button></div></article>
+ <article class="card"><div class="section-title"><div><h2>Próximos clientes</h2><div class="muted">${pending} pendientes</div></div></div><div class="client-grid">${state.clients.filter(c=>!state.status[c.id]).slice(0,6).map(clientCard).join('')||'<div class="empty">Ruta completada</div>'}</div></article>`;
+}
+function clientCard(c){
+ const n=lines(c.id).length,s=state.status[c.id]||'pending';
+ return `<div class="client"><div class="num">${c.routeOrder}</div><div class="client-main"><b>${esc(c.name)}</b><span class="badge ${s}">${statusText(c)}</span> <span class="badge">${n} productos</span></div><button class="btn primary small" onclick="openClient('${c.id}')">Abrir</button></div>`
+}
+function renderClients(){
+ $('#clients').innerHTML=`<article class="card"><div class="section-title"><div><h2>Clientes precargados</h2><div class="muted">Orden de la ruta editable</div></div><button class="btn primary small" onclick="clientForm()">+ Cliente</button></div><input class="search" id="clientSearch" placeholder="Buscar cliente…" oninput="renderClientFiltered(this.value)"><div class="client-grid" id="clientGrid" style="margin-top:10px">${state.clients.sort((a,b)=>a.routeOrder-b.routeOrder).map(clientCard).join('')}</div></article>`;
+}
+function renderClientFiltered(q){q=q.toUpperCase();$('#clientGrid').innerHTML=state.clients.filter(c=>c.name.includes(q)).map(clientCard).join('')}
+function renderOrder(){
+ const c=state.clients.find(x=>x.id===currentClient)||state.clients[0];if(!c)return;
+ const cats=['Todos',...new Set(state.products.map(p=>p.category))];
+ let ps=state.products.filter(p=>p.active!==false&&(!productQuery||p.name.includes(productQuery.toUpperCase()))&&(category==='Todos'||p.category===category));
+ $('#order').innerHTML=`<article class="card"><div class="section-title"><div><h2>Tomar pedido</h2><div class="muted">Solo toca + y −</div></div><button class="btn soft small" onclick="productForm()">+ Producto</button></div>
+ <select class="search" onchange="currentClient=this.value;render()" style="margin-bottom:8px">${state.clients.sort((a,b)=>a.routeOrder-b.routeOrder).map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${x.routeOrder}. ${esc(x.name)}</option>`).join('')}</select>
+ <div class="product-toolbar"><input class="search" placeholder="Buscar producto…" value="${esc(productQuery)}" oninput="productQuery=this.value;renderOrder()"><button class="btn soft" onclick="productQuery='';renderOrder()">Limpiar</button></div>
+ <div class="cats">${cats.map(x=>`<button class="chip ${x===category?'active':''}" onclick="category='${esc(x)}';renderOrder()">${esc(x)}</button>`).join('')}</div></article>
+ <article class="card"><div class="section-title"><div><h2>${esc(c.name)}</h2><div class="muted">${lines(c.id).length} productos añadidos</div></div><button class="btn warn small" onclick="markSkip('${c.id}')">No compra</button></div>
+ <div class="product-list">${ps.map(p=>productRow(c,p)).join('')}</div>
+ <div class="actions"><button class="btn primary" onclick="finishClient('${c.id}')">Guardar pedido</button><button class="btn dark" onclick="shareClient('${c.id}')">Enviar WhatsApp</button></div></article>`;
+}
+function productRow(c,p){const q=Number(order(c.id)[p.id]||0);return `<div class="product touch-row" onclick="showProductDetail('${p.id}')"><div class="product-top"><div class="product-name">${esc(p.name)}<div class="unit">${esc(p.category)} · ${esc(p.unit)} · pulsa para ver quién lo pidió</div></div><div class="qty" onclick="event.stopPropagation()"><button onclick="bump('${c.id}','${p.id}',-1)">−</button><input inputmode="decimal" value="${q||''}" onchange="setQty('${c.id}','${p.id}',this.value)"><button onclick="bump('${c.id}','${p.id}',1)">+</button></div></div></div>`}
+function bump(cid,pid,d){order(cid)[pid]=Math.max(0,Number(order(cid)[pid]||0)+d);save()}
+function setQty(cid,pid,v){v=Number(String(v).replace(',','.'))||0;order(cid)[pid]=Math.max(0,v);save()}
+function finishClient(id){state.status[id]='done';const idx=state.clients.findIndex(c=>c.id===id);currentClient=state.clients.slice(idx+1).find(c=>!state.status[c.id])?.id||id;save();setView('home')}
+function markSkip(id){state.status[id]='skip';state.orders[id]={};save();setView('home')}
+function renderBuy(){
+ const t=totals();
+ $('#buy').innerHTML=`<article class="card"><div class="section-title"><div><h2>Lista total de compra</h2><div class="muted">${t.length} productos consolidados</div></div></div>
+ <div class="actions"><button class="btn primary" onclick="shareBuy()">Enviar compra</button><button class="btn soft" onclick="copyText(buyText())">Copiar texto</button></div></article>
+ <article class="card">${t.length?t.map(x=>`<div class="buy-line touch-row" onclick="showProductDetail('${x.p.id}')"><div><div class="big-name">${esc(x.p.name)}</div><div class="muted">${x.clients.length} clientes · pulsa para ver detalle</div></div><div class="right"><b>${qty(x.q)} ${esc(x.p.unit)}</b><div><label class="muted" onclick="event.stopPropagation()"><input type="checkbox" ${state.purchased[x.p.id]?'checked':''} onchange="state.purchased['${x.p.id}']=this.checked;save()"> comprado</label></div></div></div>`).join(''):'<div class="empty">Todavía no hay pedidos</div>'}</article>`;
+}
+function buyText(){const t=totals();return `LISTA DE COMPRA MADRID · ${fmtDate()}\n\n`+t.map(x=>`${x.p.name}: ${qty(x.q)} ${x.p.unit}`).join('\n')}
+function clientText(id){const c=state.clients.find(x=>x.id===id),l=lines(id);return `PEDIDO ${c.name} · ${fmtDate()}\n\n`+l.map(x=>`${x.p.name}: ${qty(x.q)} ${x.p.unit}`).join('\n')}
+function fmtDate(){return new Date(state.date+'T12:00').toLocaleDateString('es-ES')}
+function shareText(text){if(navigator.share)navigator.share({text}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')}
+function shareBuy(){shareText(buyText())} function shareClient(id){shareText(clientText(id))}
+async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Texto copiado')}catch(e){prompt('Copia el texto:',t)}}
+function renderDelivery(){
+ $('#delivery').innerHTML=`<article class="card"><div class="section-title"><div><h2>Reparto por ruta</h2><div class="muted">Qué descargar en cada parada</div></div></div></article>`+
+ state.clients.sort((a,b)=>a.routeOrder-b.routeOrder).map(c=>`<article class="card"><div class="section-title"><div><h2>${c.routeOrder}. ${esc(c.name)}</h2><div class="muted">${statusText(c)}</div></div><button class="btn soft small" onclick="shareClient('${c.id}')">WhatsApp</button></div>${lines(c.id).length?lines(c.id).map(x=>`<div class="order-line"><span>${esc(x.p.name)}</span><b>${qty(x.q)} ${esc(x.p.unit)}</b></div>`).join(''):'<div class="empty">Sin pedido</div>'}</article>`).join('');
+}
+
+function productUsers(pid){
+ const p=state.products.find(x=>x.id===pid);
+ return state.clients
+   .map(c=>({c,q:Number(order(c.id)[pid]||0)}))
+   .filter(x=>x.q>0)
+   .sort((a,b)=>a.c.routeOrder-b.c.routeOrder);
+}
+function showProductDetail(pid){
+ const p=state.products.find(x=>x.id===pid); if(!p)return;
+ const users=productUsers(pid), total=users.reduce((a,x)=>a+x.q,0);
+ const rows=users.length?users.map(x=>`<div class="product-client-row">
+   <div><div class="big-name">${x.c.routeOrder}. ${esc(x.c.name)}</div><div class="muted">${statusText(x.c)}</div></div>
+   <div class="client-qty-edit">
+    <button onclick="detailBump('${x.c.id}','${pid}',-1)">−</button>
+    <input inputmode="decimal" value="${qty(x.q)}" onchange="detailSet('${x.c.id}','${pid}',this.value)">
+    <button onclick="detailBump('${x.c.id}','${pid}',1)">+</button>
+   </div>
+ </div>`).join(''):`<div class="empty">Ningún cliente tiene este producto</div>`;
+ openModal('Detalle del producto',`<div class="product-detail-head"><h3>${esc(p.name)}</h3><div>${qty(total)} ${esc(p.unit)} · ${users.length} clientes</div></div>
+ <div>${rows}</div>
+ <div class="detail-actions">
+  <button class="btn soft" onclick="copyText(productDetailText('${pid}'))">Copiar detalle</button>
+  <button class="btn dark" onclick="shareText(productDetailText('${pid}'))">WhatsApp</button>
+ </div>`);
+}
+function detailBump(cid,pid,d){
+ order(cid)[pid]=Math.max(0,Number(order(cid)[pid]||0)+d);
+ save();
+ showProductDetail(pid);
+}
+function detailSet(cid,pid,v){
+ v=Number(String(v).replace(',','.'))||0;
+ order(cid)[pid]=Math.max(0,v);
+ save();
+ showProductDetail(pid);
+}
+function productDetailText(pid){
+ const p=state.products.find(x=>x.id===pid), users=productUsers(pid);
+ const total=users.reduce((a,x)=>a+x.q,0);
+ return `${p.name} · ${qty(total)} ${p.unit}\n\n`+
+   users.map(x=>`${x.c.name}: ${qty(x.q)} ${p.unit}`).join('\n');
+}
+
+function openClient(id){currentClient=id;setView('order')}
+function openModal(title,html){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=html;$('#modal').classList.add('open')}
+function closeModal(){$('#modal').classList.remove('open')}
+function clientForm(){openModal('Añadir cliente',`<div class="form-grid"><div class="field"><label>Nombre</label><input id="cfName"></div><div class="field"><label>Orden</label><input id="cfOrder" type="number" value="${state.clients.length+1}"></div><div class="field"><label>Teléfono</label><input id="cfPhone"></div><div class="field"><label>Dirección</label><input id="cfAddress"></div></div><button class="btn primary" style="width:100%;margin-top:12px" onclick="addClient()">Guardar cliente</button>`)}
+function addClient(){const n=$('#cfName').value.trim().toUpperCase();if(!n)return;state.clients.push({id:uid('c'),name:n,phone:$('#cfPhone').value,address:$('#cfAddress').value,routeOrder:Number($('#cfOrder').value)||state.clients.length+1,active:true});closeModal();save()}
+function productForm(){openModal('Añadir producto',`<div class="form-grid"><div class="field"><label>Producto</label><input id="pfName"></div><div class="field"><label>Unidad</label><select id="pfUnit"><option>CAJA</option><option>MANOJO</option><option>UD</option><option>KG</option><option>SACO</option></select></div><div class="field" style="grid-column:1/-1"><label>Categoría</label><input id="pfCat" value="Otros"></div></div><button class="btn primary" style="width:100%;margin-top:12px" onclick="addProduct()">Guardar producto</button>`)}
+function addProduct(){const n=$('#pfName').value.trim().toUpperCase();if(!n)return;state.products.push({id:uid('p'),name:n,unit:$('#pfUnit').value,category:$('#pfCat').value.trim()||'Otros',active:true});closeModal();save()}
+function newRoute(){if(!confirm('¿Crear una ruta nueva? Se archivará la ruta actual en este dispositivo y se vaciarán cantidades.'))return;const backup=JSON.parse(localStorage.getItem('ruta_madrid_history')||'[]');backup.unshift({...state,savedAt:new Date().toISOString()});localStorage.setItem('ruta_madrid_history',JSON.stringify(backup.slice(0,20)));state.date=today();state.orders={};state.status={};state.purchased={};save()}
+$$('.nav').forEach(b=>b.onclick=()=>setView(b.dataset.view));$('#closeModal').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};$('#newRoute').onclick=newRoute;
+render();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
