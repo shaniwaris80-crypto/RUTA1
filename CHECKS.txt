@@ -1,7 +1,0 @@
-{
-  "index_has_app": true,
-  "app_balanced_braces": true,
-  "app_balanced_parens": true,
-  "seed_clients": 15,
-  "seed_products": 71
-}
