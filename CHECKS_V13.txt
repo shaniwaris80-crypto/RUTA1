@@ -1,0 +1,16 @@
+{
+  "node_syntax_ok": true,
+  "node_output": "",
+  "files": [
+    "CHECKS.txt",
+    "README.txt",
+    "app.js",
+    "database.rules.json",
+    "firebase-config.js",
+    "index.html",
+    "manifest.webmanifest",
+    "seed-data.js",
+    "styles.css",
+    "sw.js"
+  ]
+}
