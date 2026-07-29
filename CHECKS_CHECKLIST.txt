@@ -1,0 +1,9 @@
+{
+  "javascript_syntax": true,
+  "node_output": "",
+  "purchase_checklist": true,
+  "pending_first_completed_last": true,
+  "purchase_progress": true,
+  "colors_purchase_load_delivery": true,
+  "service_worker_cache": "ruta-madrid-v19-checklist2"
+}

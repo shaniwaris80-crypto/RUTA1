@@ -1,0 +1,9 @@
+{
+  "javascript_syntax": true,
+  "node_output": "",
+  "new_client_status_view": true,
+  "all_clients_visible": true,
+  "pending_done_skip_states": true,
+  "filters": true,
+  "service_worker_cache": "ruta-madrid-v19-client-status"
+}
